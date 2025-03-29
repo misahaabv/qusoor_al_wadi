@@ -1,9 +1,10 @@
-document.querySelector(".cta-btn").addEventListener("click", function () {
-    alert("Thank you for your interest! We will contact you soon.");
-});
-
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function () {
+    // CTA Button Click Handler
+    document.querySelector(".cta-btn").addEventListener("click", function () {
+        alert("Thank you for your interest! We will contact you soon.");
+    });
+
     // Add smooth scrolling to all links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -94,4 +95,39 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         goToSlide(currentSlide);
     }, 5000);
+
+    // Mobile Menu Toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('nav ul');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const body = document.body;
+
+    function toggleMenu() {
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        navOverlay.classList.toggle('active');
+        body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    }
+
+    navToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    // Close menu when clicking overlay
+    navOverlay.addEventListener('click', toggleMenu);
+
+    // Close menu when clicking a link
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            toggleMenu();
+        });
+    });
+
+    // Close menu when pressing Escape key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            toggleMenu();
+        }
+    });
 });
